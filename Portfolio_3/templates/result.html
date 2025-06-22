@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voorspleling resultaten</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Voorspleling resultaten</h1>
+
+        {% if message %}
+        <p class="message">{{ message }}</p>
+        <div class="image-display">
+            {% if original_image %}
+            <div class="image-box">
+                <h2>Originele afbeelding</h2>
+                <img src="{{ original_image }}" alt="Original Image">
+            </div>
+            {% endif %}
+            {% if predicted_image %}
+            <div class="image-box">
+                <h2>Gedetecteerde afbeelding</h2>
+                <img src="{{ predicted_image }}" alt="Predicted Image">
+            </div>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="image-display">
+            <div class="image-box">
+                <h2>Originele afbeelding</h2>
+                <img src="{{ original_image }}" alt="Original Image">
+            </div>
+            <div class="image-box">
+                <h2>Gedetecteerde afbeelding</h2>
+                <img src="{{ predicted_image }}" alt="Predicted Image with Detections">
+            </div>
+        </div>
+
+        {% if detected_items %}
+        <h2>Gedetecteerde kledingstukken:</h2>
+        <ul class="detected-items-list">
+            {% for item in detected_items %}
+            <li>{{ item.class_name }} (Confidence: {{ item.confidence }})</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="message">Geen kledingstukken gevonden.</p>
+        {% endif %}
+        {% endif %}
+
+        <p><a href="/">Upload andere afbeelding</a></p>
+    </div>
+</body>
+
+</html>
